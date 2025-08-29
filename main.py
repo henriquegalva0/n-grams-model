@@ -31,6 +31,21 @@ class unigram():
     most_frequent = [item for item, freq in Counter(wordsAfter).items() if freq == highest_freq]
 
     return random.choice(most_frequent)
+  
+  def findWord(self, targetWord):
+    wordsAfter = []
+    indices = np.where(self.data == targetWord)[0]
+
+    for i in indices:
+      if i + 1 < len(self.data):
+        wordsAfter.append(self.data[i+1])
+
+    if not wordsAfter:
+      return random.choice(self.data)
+
+    counter = Counter(wordsAfter)
+    return random.choices(list(counter.keys()), weights=counter.values())[0]
+
 
 def defineData(path):
   text = ""
