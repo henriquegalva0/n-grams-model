@@ -8,8 +8,9 @@ from time import sleep
 
 class unigram():
 
-  def __init__(self,corpus,data=[]):
+  def __init__(self,corpus,maxlength,data=[]):
     self.corpus=corpus
+    self.maxlength=maxlength
     self.data=data
 
   def treatData(self):
@@ -45,7 +46,28 @@ class unigram():
 
     counter = Counter(wordsAfter)
     return random.choices(list(counter.keys()), weights=counter.values())[0]
+  
+  def runModel(self):
+    self.maxlength=int(input('Input the max length: '))
+    firstWord=str(input('Input the first word: '))
+    target=self.findWord(firstWord)
+    sentence=firstWord
 
+    while len(sentence)<self.maxlength:
+      sentence+=" "+target
+      target=model.findWord(target)
+      print(sentence,end="\n")
+      sleep(0.2)
+    return str(sentence)
+
+  def getFullText(self,results):
+    fullText=''
+    for letter in results:
+      if letter != "\n":
+        fullText+=letter
+      else:
+        fullText+=" "
+    return fullText
 
 def defineData(path):
   text = ""
@@ -55,19 +77,7 @@ def defineData(path):
       text += page.extract_text() + " "
   return text
 
-model = unigram(defineData("ua00106a.pdf"),[])
+model = unigram(defineData("ua00106a.pdf"),200,[])
 model.treatData()
 
-firstWord=input('Input the first word: ')
-
-try:
-  target=model.findWord(firstWord)
-  sentence=firstWord
-except:
-  raise Error("This word can't be used.")
-
-while True:
-  sentence+=" "+target
-  target=model.findWord(target)
-  print(sentence)
-  sleep(1)
+print("\n\n-=- Full text -=-\n\n",model.getFullText(model.runModel()))
