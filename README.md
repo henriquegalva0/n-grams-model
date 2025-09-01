@@ -7,3 +7,10 @@ The mission of this repository is to build a functional minimal gram model where
 ### Structure
 I'm only using python and its common frameworks. There is no specific AI frameworks for tokenization, lemmatization or pre-trained models.
 The data being used is the portuguese version of the book [Metamorfose by Kafka](ua00106a.pdf). It was taken from a [public book repository](http://www.dominiopublico.gov.br/pesquisa/PesquisaObraForm.jsp) developed by government institutions.
+### Running
+If you want to try the model:
+  1. Download [main](main.py), [data](ua00106a.pdf) and [requirements](requirements.txt);
+     a) If you want to try another data, just change "ua00106a.pdf" to any .pdf you import on the following line in [main](main.py):
+         model=Ngram(defineData(**"ua00106a.pdf"**), None, N=int(input("Input the target N of the N-grams model. "))+1)
+  2. Create an enviroment downloading each framework on [requirements](requirements.txt);
+  3. Run [main](main.py).
